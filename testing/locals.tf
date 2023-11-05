@@ -37,7 +37,7 @@ locals {
     StartupShutdown     = "NA"
     Tier                = "4"
     owner               = "ganesh.baral"
-    Name                = "LEAP"
+    Name                = "LEAP Testing"
   }
 
   # Cluster additional SG rules
