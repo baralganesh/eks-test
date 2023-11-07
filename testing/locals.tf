@@ -37,7 +37,7 @@ locals {
     StartupShutdown     = "NA"
     Tier                = "4"
     owner               = "ganesh.baral"
-    Name                = "LEAP Testing"
+    Name                = "LEAP Testing" 
   }
 
   # Cluster additional SG rules
@@ -90,6 +90,7 @@ locals {
   tags_nodegroup = {
     "k8s.io/cluster-autoscaler/enabled"               = "true"
     "k8s.io/cluster-autoscaler/${local.cluster_name}" = "owned"
+    "owner"                                           = "ganesh.baral"
   }
 
   # Node additional SG rules
