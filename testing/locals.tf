@@ -3,7 +3,7 @@
 ################################################################################
 
 locals {
-  cluster_name    = "tfeks-leap-poc"
+  cluster_name    = "tfeks-poc"
   cluster_version = "1.23"
 
   # vpc private subnets
@@ -18,7 +18,7 @@ locals {
     ApplicationName     = "Backbase"
     Environment         = "Development"
     owner               = "ganesh.baral"
-    Name                = "LEAP Testing" 
+    Name                = "TFEKS-Testing" 
   }
 
   # Cluster additional SG rules
