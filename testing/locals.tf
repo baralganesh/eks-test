@@ -15,27 +15,8 @@ locals {
 
   # tags_cluster_all is for all resources created
   tags_cluster_all = {
-    ApplicationID       = "1770"
     ApplicationName     = "Backbase"
-    ApplicationRole     = "Backbase microservices"
-    BackupSchedule      = "BUStandardSLA"
-    BackupTier          = "NA"
-    BusinessCriticality = "4" # 1 - for Production
-    BusinessLine        = "Digital Banking"
-    Compliance          = "NotFSA"
-    CostCenter          = "2557"
-    DataHandling        = "Encrypted"
-    DataRetention       = "SLA-T1"
-    Description         = "DigitalBankingPlatform"
     Environment         = "Development"
-    ITContact           = "Arian Llanes"
-    ITOwner             = "CloudTeam"
-    ProjectID           = "PRJ00685"
-    ProjectName         = "LEAP"
-    ResourceName        = "ArianLlanes"
-    ResourceOwner       = "ArianLlanes"
-    StartupShutdown     = "NA"
-    Tier                = "4"
     owner               = "ganesh.baral"
     Name                = "LEAP Testing" 
   }
