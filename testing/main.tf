@@ -74,9 +74,9 @@ module "eks" {
       name          = "${local.cluster_name}-node-v123"
       ami_id        = "ami-063c96f0f567e495e"
       instance_type = local.instance_type
-      min_size      = 2
-      desired_size  = 2
-      max_size      = 4
+      min_size      = 3
+      desired_size  = 3
+      max_size      = 6
       key_name      = local.key_name
       tags          = local.tags_nodegroup
 
