@@ -53,7 +53,7 @@ locals {
   # Other values set in main.tf (node name, asg size, ami id)
   #-------------------------------------------------------------
 
-  instance_type = "t2.micro"
+  instance_type = "t2.small"
   key_name      = "ganeshbaral-sandbox" 
   
   node_block_device = {
