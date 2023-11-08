@@ -48,15 +48,15 @@ module "eks" {
 
   aws_auth_roles = [
     {
-      rolearn  = "arn:aws:iam::${local.account_id}:role/bb-eks-manager-role"
+      rolearn  = "arn:aws:iam::${local.account_id}:role/bkutfeassumeadmin"
       username = "eks-manager-role"
       groups   = ["system:masters"]
     },
   ]
   aws_auth_users = [
     {
-      userarn  = "arn:aws:iam::${local.account_id}:user/ganeshbaral"
-      username = "ganeshbaral"
+      userarn  = "arn:aws:iam::${local.account_id}:user/ganesh.baral"
+      username = "ganesh.baral"
       groups   = ["system:masters"]
     },
   ]
