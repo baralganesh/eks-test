@@ -79,6 +79,7 @@ module "eks" {
       max_size      = 4
       key_name      = local.key_name
       tags          = local.tags_nodegroup
+      propagate_at_launch = true
 
       block_device_mappings        = local.node_block_device
       iam_role_additional_policies = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
