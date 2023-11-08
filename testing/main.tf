@@ -49,7 +49,7 @@ module "eks" {
   aws_auth_roles = [
     {
       rolearn  = "arn:aws:iam::${local.account_id}:role/bkutfeassumeadmin"
-      username = "eks-manager-role"
+      username = "bkutfeassumeadmin"
       groups   = ["system:masters"]
     },
   ]
