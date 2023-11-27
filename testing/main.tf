@@ -67,7 +67,7 @@ module "eks" {
   # Self-managed nodes
   ############################################
 
-  eks_managed_node_groups = {
+  /* eks_managed_node_groups = {
     node_group_ev123 = {
       name          = "${local.cluster_name}-enode-v123"
       ami_id        = "ami-063c96f0f567e495e"
@@ -90,7 +90,7 @@ module "eks" {
       export CONTAINER_RUNTIME="containerd"
       EOT
     }
-  }
+  } */
 
   self_managed_node_groups = {
     node_group_sv123 = {
