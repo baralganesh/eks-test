@@ -67,16 +67,37 @@ module "eks" {
   # Self-managed nodes
   ############################################
 
-  #self_managed_node_group_defaults = {}
+  eks_managed_node_group_defaults = {
+    node_group_ev123 = {
+      name = "${local.cluster_name}-enode-v123"
+      instance_types = local.instance_type  # Example instance type
+      desired_capacity = 2
+      max_capacity = 4
+      min_capacity = 2
+      ami_type = "AL2_x86_64"  # Example AMI type
+      tags = local.tags_nodegroup
+      block_device_mappings = local.node_block_device
+      iam_role_additional_policies = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
+      security_group_rules = local.node_sg_rules
+      key_name      = local.key_name
+      
+      attach_cluster_primary_security_group = true
+      
+      # Enable containerd, ssm
+      pre_bootstrap_user_data = <<-EOT
+        export CONTAINER_RUNTIME="containerd"
+      EOT
+    }
+  }
 
   self_managed_node_groups = {
-    node_group_v123 = {
-      name          = "${local.cluster_name}-node-v123"
+    node_group_sv123 = {
+      name          = "${local.cluster_name}-snode-v123"
       ami_id        = "ami-063c96f0f567e495e"
       instance_type = local.instance_type
-      min_size      = 3
-      desired_size  = 3
-      max_size      = 6
+      min_size      = 2
+      desired_size  = 2
+      max_size      = 4
       key_name      = local.key_name
       tags          = local.tags_nodegroup
       propagate_at_launch = true
