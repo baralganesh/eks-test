@@ -30,6 +30,12 @@ module "eks" {
   cloudwatch_log_group_retention_in_days  = 7
   # cluster_security_group_additional_rules = local.cluster_sg_rules
 
+  # Add VPC CNI with version selection
+  vpc_cni = {
+    enabled = true
+    version = "v1.15.1-eksbuild.1"  # Replace with the desired version
+  }
+
   cluster_encryption_config = [
     {
       provider_key_arn = aws_kms_key.eks.arn
