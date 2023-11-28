@@ -29,11 +29,17 @@ module "eks" {
   cluster_enabled_log_types               = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
   cloudwatch_log_group_retention_in_days  = 7
   # cluster_security_group_additional_rules = local.cluster_sg_rules
-
-  # Add VPC CNI with version selection
-  vpc_cni = {
-    enabled = true
-    version = "v1.15.1-eksbuild.1"  # Replace with the desired version
+  
+  add_ons = {
+    ebs_csi_driver = {
+      enabled = true
+      version = "1.25.0-eksbuild.1"  # Specify the desired version here
+    },
+    efs_csi_driver = {
+      enabled = true
+      version = "v1.7.1-eksbuild.1"  # Specify the desired version here
+    }
+    # You can add more add-ons if needed
   }
 
   cluster_encryption_config = [
@@ -68,35 +74,9 @@ module "eks" {
   ]
 
   
-
   ############################################
   # Self-managed nodes
   ############################################
-
-  /* eks_managed_node_groups = {
-    node_group_ev123 = {
-      name          = "${local.cluster_name}-enode-v123"
-      ami_id        = "ami-063c96f0f567e495e"
-      instance_type = local.instance_type
-      min_size      = 2
-      desired_size  = 2
-      max_size      = 4
-      key_name      = local.key_name
-      tags          = local.tags_nodegroup
-      propagate_at_launch = true
-
-      block_device_mappings        = local.node_block_device
-      iam_role_additional_policies = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
-      security_group_rules         = local.node_sg_rules
-      
-      attach_cluster_primary_security_group = true
-      
-      # Enable containerd, ssm
-      pre_bootstrap_user_data = <<-EOT
-      export CONTAINER_RUNTIME="containerd"
-      EOT
-    }
-  } */
 
   self_managed_node_groups = {
     node_group_sv123 = {
