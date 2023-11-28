@@ -28,23 +28,7 @@ module "eks" {
   cluster_endpoint_private_access         = true
   cluster_enabled_log_types               = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
   cloudwatch_log_group_retention_in_days  = 7
-  # cluster_security_group_additional_rules = local.cluster_sg_rules
-  
-  resource "helm_release" "ebs_csi" {
-  name       = "aws-ebs-csi-driver"
-  repository = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver"
-  chart      = "aws-ebs-csi-driver"
-  version    = "1.25.0-eksbuild.1"
-  # additional configurations...
-  }
-
-  resource "helm_release" "efs_csi" {
-  name       = "aws-efs-csi-driver"
-  repository = "https://kubernetes-sigs.github.io/aws-efs-csi-driver/"
-  chart      = "aws-efs-csi-driver"
-  version    = "v1.7.1-eksbuild.1"
-  # additional configurations...
-  }
+  # cluster_security_group_additional_rules = local.cluster_sg_rules  
 
   cluster_encryption_config = [
     {
@@ -121,6 +105,25 @@ resource "aws_kms_key" "eks" {
     Note = "Created by terraform for EKS cluster ${local.cluster_name}"
   }
 }
+
+# EBS CSI Driver installation
+resource "kubernetes_manifest" "ebs_csi_driver" {
+  manifest = {
+    # Use the YAML from the 'kubernetes-1-17' directory in the AWS EBS CSI Driver repository
+    https://github.com/kubernetes-sigs/aws-ebs-csi-driver/blob/master/deploy/kubernetes/overlays/stable/kustomization.yaml
+  }
+}
+
+
+
+# EBS CSI Driver installation
+resource "kubernetes_manifest" "efs_csi_driver" {
+  manifest = {
+    # Use the YAML from the 'kubernetes-1-17' directory in the AWS EFS CSI Driver repository
+    https://github.com/kubernetes-sigs/aws-efs-csi-driver/blob/master/deploy/kubernetes/overlays/stable/kustomization.yaml
+  }
+}
+
 
 ################################################################################
 # Notes
