@@ -30,6 +30,7 @@ module "eks" {
   cloudwatch_log_group_retention_in_days  = 7
   # cluster_security_group_additional_rules = local.cluster_sg_rules
   
+  
   add_ons = {
     ebs_csi_driver = {
       enabled = true
