@@ -30,17 +30,20 @@ module "eks" {
   cloudwatch_log_group_retention_in_days  = 7
   # cluster_security_group_additional_rules = local.cluster_sg_rules
   
-  
-  add_ons = {
-    ebs_csi_driver = {
-      enabled = true
-      version = "1.25.0-eksbuild.1"  # Specify the desired version here
-    },
-    efs_csi_driver = {
-      enabled = true
-      version = "v1.7.1-eksbuild.1"  # Specify the desired version here
-    }
-    # You can add more add-ons if needed
+  resource "helm_release" "ebs_csi" {
+  name       = "aws-ebs-csi-driver"
+  repository = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver"
+  chart      = "aws-ebs-csi-driver"
+  version    = "1.25.0-eksbuild.1"
+  # additional configurations...
+  }
+
+  resource "helm_release" "efs_csi" {
+  name       = "aws-efs-csi-driver"
+  repository = "https://kubernetes-sigs.github.io/aws-efs-csi-driver/"
+  chart      = "aws-efs-csi-driver"
+  version    = "v1.7.1-eksbuild.1"
+  # additional configurations...
   }
 
   cluster_encryption_config = [
