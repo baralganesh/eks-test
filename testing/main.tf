@@ -106,25 +106,6 @@ resource "aws_kms_key" "eks" {
   }
 }
 
-# EBS CSI Driver installation
-resource "kubernetes_manifest" "ebs_csi_driver" {
-  manifest = {
-    # Use the YAML from the 'kubernetes-1-17' directory in the AWS EBS CSI Driver repository
-    https://github.com/kubernetes-sigs/aws-ebs-csi-driver/blob/master/deploy/kubernetes/overlays/stable/kustomization.yaml
-  }
-}
-
-
-
-# EBS CSI Driver installation
-resource "kubernetes_manifest" "efs_csi_driver" {
-  manifest = {
-    # Use the YAML from the 'kubernetes-1-17' directory in the AWS EFS CSI Driver repository
-    https://github.com/kubernetes-sigs/aws-efs-csi-driver/blob/master/deploy/kubernetes/overlays/stable/kustomization.yaml
-  }
-}
-
-
 ################################################################################
 # Notes
 ################################################################################
