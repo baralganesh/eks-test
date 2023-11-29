@@ -148,68 +148,9 @@ resource "aws_eks_addon" "kube_proxy" {
 
 
 # Metrics-server
-resource "kubernetes_manifest" "metrics_server" {
-  manifest = {
-    apiVersion = "apps/v1"
-    kind       = "Deployment"
-    metadata = {
-      name      = "metrics-server"
-      namespace = "kube-system"
-    }
-    spec = {
-      selector = {
-        matchLabels = {
-          k8s-app = "metrics-server"
-        }
-      }
-      template = {
-        metadata = {
-          labels = {
-            k8s-app = "metrics-server"
-          }
-        }
-        spec = {
-          containers = [
-            {
-              name  = "metrics-server"
-              image = "registry.k8s.io/metrics-server/metrics-server:v0.6.4"  # Update with the latest version
-              args = [
-                "--cert-dir=/tmp",
-                "--secure-port=4443",
-                "--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname",
-                "--kubelet-use-node-status-port",
-                "--metric-resolution=15s"
-              ]
-              ports = [
-                {
-                  containerPort = 4443
-                  name          = "https"
-                }
-              ]
-              securityContext = {
-                readOnlyRootFilesystem = true
-                runAsNonRoot           = true
-                runAsUser              = 1000
-              }
-              volumeMounts = [
-                {
-                  mountPath = "/tmp"
-                  name      = "tmp-dir"
-                }
-              ]
-            }
-          ]
-          volumes = [
-            {
-              name = "tmp-dir"
-              emptyDir = {}
-            }
-          ]
-        }
-      }
-    }
-  }
-}
+
+
+# alb-controller
 
 
 ################################################################################
