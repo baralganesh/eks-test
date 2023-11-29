@@ -172,7 +172,7 @@ resource "kubernetes_manifest" "metrics_server" {
           containers = [
             {
               name  = "metrics-server"
-              image = "k8s.gcr.io/metrics-server/metrics-server:v0.6.4"  # Update with the latest version
+              image = "registry.k8s.io/metrics-server/metrics-server:v0.6.4"  # Update with the latest version
               args = [
                 "--cert-dir=/tmp",
                 "--secure-port=4443",
