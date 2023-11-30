@@ -173,14 +173,14 @@ resource "kubernetes_manifest" "customresourcedefinition_ingressclassparams_elbv
         },
       ]
     }
-    "status" = {
-      "acceptedNames" = {
-        "kind" = ""
-        "plural" = ""
-      }
-      "conditions" = []
-      "storedVersions" = []
-    }
+    #"status" = {
+    #  "acceptedNames" = {
+    #    "kind" = ""
+    #    "plural" = ""
+    #  }
+    #  "conditions" = []
+    #  "storedVersions" = []
+    #}
   }
 }
 
@@ -636,17 +636,17 @@ resource "kubernetes_manifest" "customresourcedefinition_targetgroupbindings_elb
                   ]
                   "type" = "object"
                 }
-                "status" = {
-                  "description" = "TargetGroupBindingStatus defines the observed state of TargetGroupBinding"
-                  "properties" = {
-                    "observedGeneration" = {
-                      "description" = "The generation observed by the TargetGroupBinding controller."
-                      "format" = "int64"
-                      "type" = "integer"
-                    }
-                  }
-                  "type" = "object"
-                }
+                #"status" = {
+                #  "description" = "TargetGroupBindingStatus defines the observed state of TargetGroupBinding"
+                #  "properties" = {
+                #    "observedGeneration" = {
+                #      "description" = "The generation observed by the TargetGroupBinding controller."
+                #      "format" = "int64"
+                #      "type" = "integer"
+                #    }
+                #  }
+                #  "type" = "object"
+                #}
               }
               "type" = "object"
             }
