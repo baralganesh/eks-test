@@ -16,3 +16,8 @@ resource "helm_release" "cluster_autoscaler" {
 
   # Additional configurations can be added here.
 }
+
+
+389  kubectl delete -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.crds.yaml
+  390  kubectl delete -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml~
+  391  kubectl delete -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
