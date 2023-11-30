@@ -1,3 +1,24 @@
+# Install cert-manager before applying this part:
+
+# STEPS #
+# - kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.crds.yaml
+# - kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
+# - kubectl get pods --namespace cert-manager
+
+    /*
+    kubectl apply -f - <<EOF
+    apiVersion: cert-manager.io/v1
+    kind: Issuer
+    metadata:
+      name: selfsigned-issuer
+      namespace: kube-system
+    spec:
+      selfSigned: {}
+    EOF
+
+    */
+#
+
 resource "kubernetes_manifest" "customresourcedefinition_ingressclassparams_elbv2_k8s_aws" {
   manifest = {
     "apiVersion" = "apiextensions.k8s.io/v1"
