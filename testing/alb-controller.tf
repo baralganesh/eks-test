@@ -88,6 +88,28 @@ resource "kubernetes_manifest" "customresourcedefinition_ingressclassparams_elbv
                       ]
                       "type" = "string"
                     }
+                    "loadBalancerAttributes" = {
+                      "description" = "LoadBalancerAttributes define the custom attributes to LoadBalancers for all Ingress that that belong to IngressClass with this IngressClassParams."
+                      "items" = {
+                        "description" = "Attributes defines custom attributes on resources."
+                        "properties" = {
+                          "key" = {
+                            "description" = "The key of the attribute."
+                            "type" = "string"
+                          }
+                          "value" = {
+                            "description" = "The value of the attribute."
+                            "type" = "string"
+                          }
+                        }
+                        "required" = [
+                          "key",
+                          "value",
+                        ]
+                        "type" = "object"
+                      }
+                      "type" = "array"
+                    }
                     "namespaceSelector" = {
                       "description" = "NamespaceSelector restrict the namespaces of Ingresses that are allowed to specify the IngressClass with this IngressClassParams. * if absent or present but empty, it selects all namespaces."
                       "properties" = {
@@ -173,14 +195,14 @@ resource "kubernetes_manifest" "customresourcedefinition_ingressclassparams_elbv
         },
       ]
     }
-    #"status" = {
-    #  "acceptedNames" = {
-    #    "kind" = ""
-    #    "plural" = ""
-    #  }
-    #  "conditions" = []
-    #  "storedVersions" = []
-    #}
+    "status" = {
+      "acceptedNames" = {
+        "kind" = ""
+        "plural" = ""
+      }
+      "conditions" = []
+      "storedVersions" = []
+    }
   }
 }
 
@@ -462,6 +484,14 @@ resource "kubernetes_manifest" "customresourcedefinition_targetgroupbindings_elb
                 "spec" = {
                   "description" = "TargetGroupBindingSpec defines the desired state of TargetGroupBinding"
                   "properties" = {
+                    "ipAddressType" = {
+                      "description" = "ipAddressType specifies whether the target group is of type IPv4 or IPv6. If unspecified, it will be automatically inferred."
+                      "enum" = [
+                        "ipv4",
+                        "ipv6",
+                      ]
+                      "type" = "string"
+                    }
                     "networking" = {
                       "description" = "networking defines the networking rules to allow ELBV2 LoadBalancer to access targets in TargetGroup."
                       "properties" = {
@@ -659,14 +689,14 @@ resource "kubernetes_manifest" "customresourcedefinition_targetgroupbindings_elb
         },
       ]
     }
-    #"status" = {
-    #  "acceptedNames" = {
-    #    "kind" = ""
-    #    "plural" = ""
-    #  }
-    #  "conditions" = []
-    #  "storedVersions" = []
-    #}
+    "status" = {
+      "acceptedNames" = {
+        "kind" = ""
+        "plural" = ""
+      }
+      "conditions" = []
+      "storedVersions" = []
+    }
   }
 }
 
@@ -821,19 +851,6 @@ resource "kubernetes_manifest" "clusterrole_aws_load_balancer_controller_role" {
           "",
         ]
         "resources" = [
-          "secrets",
-        ]
-        "verbs" = [
-          "get",
-          "list",
-          "watch",
-        ]
-      },
-      {
-        "apiGroups" = [
-          "",
-        ]
-        "resources" = [
           "services",
         ]
         "verbs" = [
@@ -854,6 +871,19 @@ resource "kubernetes_manifest" "clusterrole_aws_load_balancer_controller_role" {
         "verbs" = [
           "patch",
           "update",
+        ]
+      },
+      {
+        "apiGroups" = [
+          "discovery.k8s.io",
+        ]
+        "resources" = [
+          "endpointslices",
+        ]
+        "verbs" = [
+          "get",
+          "list",
+          "watch",
         ]
       },
       {
@@ -1080,7 +1110,7 @@ resource "kubernetes_manifest" "deployment_kube_system_aws_load_balancer_control
                 "--cluster-name=your-cluster-name",
                 "--ingress-class=alb",
               ]
-              "image" = "amazon/aws-alb-ingress-controller:v2.2.1"
+              "image" = "amazon/aws-alb-ingress-controller:v2.4.1"
               "livenessProbe" = {
                 "failureThreshold" = 2
                 "httpGet" = {
@@ -1146,7 +1176,7 @@ resource "kubernetes_manifest" "deployment_kube_system_aws_load_balancer_control
 
 resource "kubernetes_manifest" "certificate_kube_system_aws_load_balancer_serving_cert" {
   manifest = {
-    "apiVersion" = "cert-manager.io/v1alpha2"
+    "apiVersion" = "cert-manager.io/v1"
     "kind" = "Certificate"
     "metadata" = {
       "labels" = {
@@ -1171,7 +1201,7 @@ resource "kubernetes_manifest" "certificate_kube_system_aws_load_balancer_servin
 
 resource "kubernetes_manifest" "issuer_kube_system_aws_load_balancer_selfsigned_issuer" {
   manifest = {
-    "apiVersion" = "cert-manager.io/v1alpha2"
+    "apiVersion" = "cert-manager.io/v1"
     "kind" = "Issuer"
     "metadata" = {
       "labels" = {
@@ -1343,7 +1373,7 @@ resource "kubernetes_manifest" "validatingwebhookconfiguration_aws_load_balancer
           "service" = {
             "name" = "aws-load-balancer-webhook-service"
             "namespace" = "kube-system"
-            "path" = "/validate-networking-v1beta1-ingress"
+            "path" = "/validate-networking-v1-ingress"
           }
         }
         "failurePolicy" = "Fail"
@@ -1355,7 +1385,7 @@ resource "kubernetes_manifest" "validatingwebhookconfiguration_aws_load_balancer
               "networking.k8s.io",
             ]
             "apiVersions" = [
-              "v1beta1",
+              "v1",
             ]
             "operations" = [
               "CREATE",
@@ -1369,5 +1399,39 @@ resource "kubernetes_manifest" "validatingwebhookconfiguration_aws_load_balancer
         "sideEffects" = "None"
       },
     ]
+  }
+}
+
+resource "kubernetes_manifest" "ingressclassparams_alb" {
+  manifest = {
+    "apiVersion" = "elbv2.k8s.aws/v1beta1"
+    "kind" = "IngressClassParams"
+    "metadata" = {
+      "labels" = {
+        "app.kubernetes.io/name" = "aws-load-balancer-controller"
+      }
+      "name" = "alb"
+    }
+  }
+}
+
+resource "kubernetes_manifest" "ingressclass_alb" {
+  manifest = {
+    "apiVersion" = "networking.k8s.io/v1"
+    "kind" = "IngressClass"
+    "metadata" = {
+      "labels" = {
+        "app.kubernetes.io/name" = "aws-load-balancer-controller"
+      }
+      "name" = "alb"
+    }
+    "spec" = {
+      "controller" = "ingress.k8s.aws/alb"
+      "parameters" = {
+        "apiGroup" = "elbv2.k8s.aws"
+        "kind" = "IngressClassParams"
+        "name" = "alb"
+      }
+    }
   }
 }
