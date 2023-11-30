@@ -3,7 +3,7 @@ resource "helm_release" "cluster_autoscaler" {
   namespace  = "kube-system"
   repository = "https://kubernetes.github.io/autoscaler"
   chart      = "cluster-autoscaler"
-  version    = "1.23.0"  # Replace with your desired chart version
+  version    = "9.24.0"  # Replace with your desired chart version
 
   set {
     name  = "autoDiscovery.clusterName"
