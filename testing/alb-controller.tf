@@ -195,14 +195,14 @@ resource "kubernetes_manifest" "customresourcedefinition_ingressclassparams_elbv
         },
       ]
     }
-    "status" = {
-      "acceptedNames" = {
-        "kind" = ""
-        "plural" = ""
-      }
-      "conditions" = []
-      "storedVersions" = []
-    }
+    #"status" = {
+    #  "acceptedNames" = {
+    #    "kind" = ""
+    #    "plural" = ""
+    #  }
+    #  "conditions" = []
+    #  "storedVersions" = []
+    #}
   }
 }
 
@@ -689,14 +689,14 @@ resource "kubernetes_manifest" "customresourcedefinition_targetgroupbindings_elb
         },
       ]
     }
-    "status" = {
-      "acceptedNames" = {
-        "kind" = ""
-        "plural" = ""
-      }
-      "conditions" = []
-      "storedVersions" = []
-    }
+    #"status" = {
+    #  "acceptedNames" = {
+    #    "kind" = ""
+    #   "plural" = ""
+    #  }
+    #  "conditions" = []
+    #  "storedVersions" = []
+    #}
   }
 }
 
