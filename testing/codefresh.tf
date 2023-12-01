@@ -1,9 +1,3 @@
-# Add the Codefresh Helm repository
-resource "helm_repository" "codefresh" {
-  name = "codefresh"
-  url  = "https://charts.codefresh.io"
-}
-
 # Install Codefresh
 resource "helm_release" "codefresh" {
   name       = "codefresh"
@@ -13,10 +7,10 @@ resource "helm_release" "codefresh" {
   create_namespace = true
 
   # Specify your values
-  set {
-    name  = "property_name"
-    value = "property_value"
-  }
+  #set {
+  #  name  = "property_name"
+  #  value = "property_value"
+  #}
 
   # Specify additional configurations as needed
 }
