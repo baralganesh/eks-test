@@ -4,7 +4,7 @@ resource "helm_release" "argocd" {
   chart      = "argo-cd"
   namespace  = "argocd"
   create_namespace = true
-  version    = "4.10.6" # Replace with your desired chart version
+  version    = "2.7.14" 
 
   set {
     name  = "server.service.type"
