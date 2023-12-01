@@ -1,10 +1,8 @@
-# Install Codefresh
 resource "helm_release" "codefresh" {
   name       = "codefresh"
-  chart      = "codefresh/codefresh"
-  repository = helm_repository.codefresh.metadata[0].name
-  namespace  = "codefresh" # Use the desired namespace
-  create_namespace = true
+  namespace  = "codefresh-namespace" # Replace with your desired namespace
+  repository = "https://charts.codefresh.io" # Codefresh Helm repo URL
+  chart      = "codefresh" # Replace with the chart name
 
   # Specify your values
   #set {
@@ -12,5 +10,5 @@ resource "helm_release" "codefresh" {
   #  value = "property_value"
   #}
 
-  # Specify additional configurations as needed
+  # Additional settings can be configured here
 }
