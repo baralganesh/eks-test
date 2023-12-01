@@ -1,6 +1,6 @@
 resource "helm_release" "codefresh" {
   name       = "codefresh"
-  namespace  = "codefresh-namespace" # Replace with your desired namespace
+  namespace  = "codefresh" # Replace with your desired namespace
   repository = "https://charts.codefresh.io" # Codefresh Helm repo URL
   chart      = "codefresh" # Replace with the chart name
 
