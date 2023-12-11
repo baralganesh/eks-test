@@ -161,3 +161,12 @@ output "aws_auth_configmap_yaml" {
   description = "Formatted yaml output for base aws-auth configmap containing roles used in cluster node groups/fargate profiles"
   value       = module.eks.aws_auth_configmap_yaml
 }
+
+################################################################################
+# EBS CSI Driver Role arn
+################################################################################
+
+output "ebs_csi_driver_role_arn" {
+  value = aws_iam_role.ebs_csi_driver.arn
+  description = "The ARN of the IAM role created for the EBS CSI Driver"
+}
