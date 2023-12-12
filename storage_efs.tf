@@ -1,4 +1,6 @@
-# EFS CSI Driver
+# ---------------------------------------------------------------
+# EBS CSI Driver Addon Installation
+# ---------------------------------------------------------------
 resource "aws_eks_addon" "efs_csi_driver" {
   cluster_name      = module.eks.cluster_id
   addon_name        = "aws-efs-csi-driver"
