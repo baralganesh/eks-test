@@ -1,19 +1,34 @@
 # ---------------------------------------------------------------
 # service account for ebs_csi_driver
 # ---------------------------------------------------------------
-module "ebs_csi_driver_irsa" {
-  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "4.14.0"
+# attach_ebs_csi_policy = true
 
-  role_name        = "${module.eks.cluster_id}-ebs-csi-driver"
-  role_description = "IRSA role for EBS CSI Driver"
+# ---------------------------------------------------------------
+# IAM Role for EBS CSI Driver
+# ---------------------------------------------------------------
+resource "aws_iam_role" "ebs_csi_driver_role" {
+  name = "${module.eks.cluster_id}-ebs-csi-driver"
 
-  attach_ebs_csi_policy = true
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = "sts:AssumeRoleWithWebIdentity",
+        Effect = "Allow",
+        Principal = {
+          Federated = "arn:aws:iam::${local.account_id}:oidc-provider/${module.eks.oidc_provider_arn}"
+        },
+        Condition = {
+          StringEquals = {
+            "${module.eks.oidc_provider_arn}:sub": "system:serviceaccount:kube-system:ebs-csi-driver-sa"
+          }
+        }
+      }
+    ]
+  })
+}
 
-  oidc_providers = {
-    main = {
-      provider_arn               = module.eks.oidc_provider_arn
-      namespace_service_accounts = ["kube-system:ebs-csi-controller-sa"]
-    }
-  }
+resource "aws_iam_role_policy_attachment" "ebs_csi_driver-attach" {
+  role       = aws_iam_role.ebs_csi_driver_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
 }
