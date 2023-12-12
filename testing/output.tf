@@ -167,6 +167,6 @@ output "aws_auth_configmap_yaml" {
 ################################################################################
 
 output "ebs_csi_driver_role_arn" {
-  value = aws_iam_role.ebs_csi_driver.arn
+  value = module.ebs_csi_driver.arn
   description = "The ARN of the IAM role created for the EBS CSI Driver"
 }
