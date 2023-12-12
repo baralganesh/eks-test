@@ -1,12 +1,12 @@
 # ---------------------------------------------------------------
-# service account for ebs_csi_driver
+# service account for efs_csi_driver
 # ---------------------------------------------------------------
 
 # ---------------------------------------------------------------
-# IAM Role for EBS CSI Driver
+# IAM Role for EFS CSI Driver
 # ---------------------------------------------------------------
-resource "aws_iam_role" "ebs_csi_driver_role" {
-  name = "${module.eks.cluster_id}-ebs-csi-driver"
+resource "aws_iam_role" "efs_csi_driver_role" {
+  name = "${module.eks.cluster_id}-efs-csi-driver"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -20,7 +20,7 @@ resource "aws_iam_role" "ebs_csi_driver_role" {
         Condition = {
           StringEquals = {
             "${module.eks.oidc_provider}:aud": "sts.amazonaws.com",
-            "${module.eks.oidc_provider}:sub": "system:serviceaccount:kube-system:ebs-csi-controller-sa"
+            "${module.eks.oidc_provider}:sub": "system:serviceaccount:kube-system:efs-csi-controller-sa"
           }
         }
       }
@@ -28,7 +28,7 @@ resource "aws_iam_role" "ebs_csi_driver_role" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "ebs_csi_driver-attach" {
-  role       = aws_iam_role.ebs_csi_driver_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+resource "aws_iam_role_policy_attachment" "efs_csi_driver-attach" {
+  role       = aws_iam_role.efs_csi_driver_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonElasticFileSystemFullAccess"
 }
