@@ -162,13 +162,3 @@ output "aws_auth_configmap_yaml" {
   value       = module.eks.aws_auth_configmap_yaml
 }
 
-################################################################################
-# EBS CSI Driver Role arn
-################################################################################
-
-output "ebs_csi_driver_role_arn" {
-  value       = module.ebs_csi_driver_irsa.this_iam_role_arn
-  description = "The ARN of the IAM role created for the EBS CSI Driver"
-}
-
-
