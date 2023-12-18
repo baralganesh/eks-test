@@ -3,7 +3,7 @@
 ################################################################################
 
 locals {
-  cluster_name    = "tfeks-test"
+  cluster_name    = "tfeks-tst"
   cluster_version = "1.23"
 
   # vpc private subnets

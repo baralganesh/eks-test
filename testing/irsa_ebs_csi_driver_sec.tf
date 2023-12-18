@@ -10,7 +10,7 @@ module "ebs_csi_driver_irsa" {
 
 
   attach_ebs_csi_policy = true
-
+  
   oidc_providers = {
     main = {
       provider_arn               = module.eks.oidc_provider
