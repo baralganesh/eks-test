@@ -71,9 +71,9 @@ module "eks" {
       name          = "${local.cluster_name}-snode-v123"
       ami_id        = "ami-063c96f0f567e495e"
       instance_type = local.instance_type
-      min_size      = 2
-      desired_size  = 2
-      max_size      = 4
+      min_size      = 1
+      desired_size  = 1
+      max_size      = 2
       key_name      = local.key_name
       tags          = local.tags_nodegroup
       propagate_at_launch = true
