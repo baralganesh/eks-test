@@ -9,10 +9,6 @@ module "efs_csi_driver_irsa" {
   role_name = "${module.eks.cluster_id}-efs-csi-driver"
   role_description = "IRSA role for EFS CSI Driver"
 
-  attach_efs_csi_policy = true
-
-  allow_external_id = true
-
   oidc_providers = {
     main = {
       provider_arn  = module.eks.oidc_provider
