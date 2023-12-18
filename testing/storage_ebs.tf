@@ -6,6 +6,8 @@ resource "aws_eks_addon" "ebs_csi" {
   addon_name        = "aws-ebs-csi-driver"
   addon_version     = "v1.23.2-eksbuild.1" # Replace with the actual version you want to install
   resolve_conflicts = "OVERWRITE"
-  service_account_role_arn = "arn:aws:iam::${local.account_id}:role/${ebs_csi_driver_irsa.role_name}" # Replace with the correct role ARN
+  #service_account_role_arn = "arn:aws:iam::${local.account_id}:role/${ebs_csi_driver_irsa.role_name}" # Replace with the correct role ARN
+  service_account_role_arn = module.ebs_csi_driver_irsa.role_name
+
 }
 
