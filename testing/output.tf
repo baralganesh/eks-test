@@ -161,7 +161,3 @@ output "aws_auth_configmap_yaml" {
   description = "Formatted yaml output for base aws-auth configmap containing roles used in cluster node groups/fargate profiles"
   value       = module.eks.aws_auth_configmap_yaml
 }
-
-output "ebs_csi_driver_service_account_role_arn" {
-  value = module.ebs_csi_driver_irsa.this_iam_role_arn
-}
