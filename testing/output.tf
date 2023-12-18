@@ -162,9 +162,6 @@ output "aws_auth_configmap_yaml" {
   value       = module.eks.aws_auth_configmap_yaml
 }
 
-
-output "role_name" {
-  description = "The name of the IAM role"
-  value       = "${module.eks.cluster_id}-ebs-csi-driver"
+output "ebs_csi_driver_service_account_role_arn" {
+  value = module.ebs_csi_driver_irsa.this_iam_role_arn
 }
-
