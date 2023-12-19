@@ -10,7 +10,7 @@ module "efs_csi_driver_irsa" {
   role_description = "IRSA role for EFS CSI Driver"
 
   # Assuming there is a predefined policy for EFS CSI
-  attach_efs_csi_policy = true
+  role_policy_arns = ["arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy"]
   
   oidc_providers = {
     main = {
