@@ -16,12 +16,12 @@ module "ebs_csi_driver_irsa" {
       provider_arn               = module.eks.oidc_provider
       namespace_service_accounts = ["kube-system:ebs-csi-controller-sa"]
       conditions = {
-        audience {
+        audience = {
           StringEquals = {
             "${module.eks.oidc_provider}:aud": "sts.amazonaws.com"
           }
-        },
-        subject {
+        }
+        subject = {
           StringEquals = {
             "${module.eks.oidc_provider}:sub": "system:serviceaccount:kube-system:ebs-csi-controller-sa"
           }
