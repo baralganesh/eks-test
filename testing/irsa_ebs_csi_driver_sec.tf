@@ -2,7 +2,7 @@
 # service account for ebs_csi_driver
 # ---------------------------------------------------------------
 
-module "ebs_csi_driver_irsa" {
+module "ebs_csi_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "4.14.0"
 
@@ -23,7 +23,7 @@ module "ebs_csi_driver_irsa" {
         }
         subject = {
           StringEquals = {
-            "${module.eks.oidc_provider}:sub": "system:serviceaccount:kube-system:ebs-csi-controller-sa"
+            "${provider_arn}:sub": "system:serviceaccount:kube-system:ebs-csi-controller-sa"
           }
         }
       }
