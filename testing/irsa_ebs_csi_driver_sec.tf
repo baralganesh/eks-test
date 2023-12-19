@@ -18,7 +18,11 @@ module "ebs_csi_driver_irsa" {
       namespace_service_accounts = ["kube-system:ebs-csi-controller-sa"]
       conditions                = {
         StringEquals = {
-          "${oidc_provider_arn}:aud": "sts.amazonaws.com",
+          "${oidc_provider_arn}:aud": "sts.amazonaws.com"
+        }
+      }
+      conditions                = {
+        StringEquals = {
           "${oidc_provider_arn}:sub": "system:serviceaccount:kube-system:ebs-csi-controller-sa"
         }
       }
