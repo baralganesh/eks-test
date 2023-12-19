@@ -8,18 +8,17 @@ module "ebs_csi_driver_irsa" {
   role_name        = "${module.eks.cluster_id}-ebs-csi-driver"
   role_description = "IRSA role for EBS CSI Driver" 
 
-
   attach_ebs_csi_policy = true
   
   oidc_providers = {
     main = {
       provider_arn               = module.eks.oidc_provider
       namespace_service_accounts = ["kube-system:ebs-csi-controller-sa"]
-      Condition = {
-          StringEquals = {
-            "${module.eks.oidc_provider}:aud": "sts.amazonaws.com",
-            "${module.eks.oidc_provider}:sub": "system:serviceaccount:kube-system:ebs-csi-controller-sa"
-          }
+      conditions                = {
+        StringEquals = {
+          "${module.eks.oidc_provider}:aud": "sts.amazonaws.com",
+          "${module.eks.oidc_provider}:sub": "system:serviceaccount:kube-system:ebs-csi-controller-sa"
+        }
       }
     }
   }
