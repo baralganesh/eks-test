@@ -13,7 +13,6 @@ module "ebs_csi_driver_irsa" {
 
   oidc_providers = {
     main = {
-      provider_arn               = oidc_provider_arn
       namespace_service_accounts = ["kube-system:ebs-csi-controller-sa"]
       conditions                = {
         StringEquals = {
@@ -22,7 +21,7 @@ module "ebs_csi_driver_irsa" {
       }
       conditions                = {
         StringEquals = {
-          "${omodule.eks.oidc_provider}:sub": "system:serviceaccount:kube-system:ebs-csi-controller-sa"
+          "${module.eks.oidc_provider}:sub": "system:serviceaccount:kube-system:ebs-csi-controller-sa"
         }
       }
     }
