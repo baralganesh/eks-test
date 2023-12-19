@@ -10,9 +10,10 @@ module "ebs_csi_driver_irsa" {
   role_description = "IRSA role for EBS CSI Driver" 
 
   attach_ebs_csi_policy = true
-
+  
   oidc_providers = {
     main = {
+      provider_arn               = module.eks.oidc_provider
       namespace_service_accounts = ["kube-system:ebs-csi-controller-sa"]
       conditions                = {
         StringEquals = {
