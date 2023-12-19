@@ -18,7 +18,7 @@ module "ebs_csi_driver_irsa" {
       conditions = {
         audience = {
           StringEquals = {
-            "${module.eks.oidc_provider}:aud": "sts.amazonaws.com"
+            "${module.eks.oidc_provider}:aud": "sts.amazonaws.com",
           }
         }
         subject = {
