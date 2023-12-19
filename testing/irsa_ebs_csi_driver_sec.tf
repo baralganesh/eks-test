@@ -18,12 +18,12 @@ module "ebs_csi_driver_irsa" {
       conditions = {
         audience {
           StringEquals = {
-            "${module.eks.oidc_provider}:aud": "sts.amazonaws.com",
+            "${module.eks.oidc_provider}:aud": "sts.amazonaws.com"
           }
-        }
+        },
         subject {
           StringEquals = {
-            "${module.eks.oidc_provider}:sub": "system:serviceaccount:kube-system:ebs-csi-controller-sa",
+            "${module.eks.oidc_provider}:sub": "system:serviceaccount:kube-system:ebs-csi-controller-sa"
           }
         }
       }
