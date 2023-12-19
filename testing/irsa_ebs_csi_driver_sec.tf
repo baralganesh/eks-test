@@ -13,14 +13,14 @@ module "ebs_csi_irsa_role" {
   
   oidc_providers = {
     main = {
-      #provider_arn               = module.eks.oidc_provider
+      provider_arn               = module.eks.oidc_provider
       namespace_service_accounts = ["kube-system:ebs-csi-controller-sa"]
       conditions = {
         audience = {
           StringEquals = {
             "${module.eks.oidc_provider}:aud": "sts.amazonaws.com",
           }
-        }
+        },
         subject = {
           StringEquals = {
             "${module.eks.oidc_provider}:sub": "system:serviceaccount:kube-system:ebs-csi-controller-sa"
