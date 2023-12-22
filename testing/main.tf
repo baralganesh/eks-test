@@ -96,6 +96,7 @@ module "eks" {
     node_group_ev123 = {
       name                       = "${local.cluster_name}-enode-v123"
       subnet_ids                 = local.subnet_ids
+      ami_id                     = "ami-063c96f0f567e495e"
       instance_types             = [local.instance_type]
       desired_capacity           = 1
       max_capacity               = 2
@@ -103,8 +104,17 @@ module "eks" {
       ami_type                   = "AL2_x86_64"
       key_name                   = local.key_name
       tags                       = local.tags_nodegroup
+      propagate_at_launch = true
+      block_device_mappings        = local.node_block_device
       iam_role_additional_policies = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
-      security_group_ids         = [aws_security_group.node_sg.id]  # Assuming a security group resource
+      security_group_ids           = local.node_sg_rules  # Assuming a security group resource
+
+      attach_cluster_primary_security_group = true
+      
+      # Enable containerd, ssm
+      pre_bootstrap_user_data = <<-EOT
+      export CONTAINER_RUNTIME="containerd"
+      EOT
     }
   }
 
