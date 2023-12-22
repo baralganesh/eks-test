@@ -109,7 +109,7 @@ module "eks" {
       iam_role_additional_policies = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
       security_group_ids           = local.node_sg_rules  # Assuming a security group resource
 
-      attach_cluster_primary_security_group = true
+      #attach_cluster_primary_security_group = true
       
       # Enable containerd, ssm
       pre_bootstrap_user_data = <<-EOT
