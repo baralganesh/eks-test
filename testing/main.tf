@@ -91,6 +91,23 @@ module "eks" {
     }
   }
 
+  # Managed node groups
+  eks_managed_node_groups = {
+    node_group_ev123 = {
+      name                       = "${local.cluster_name}-enode-v123"
+      subnet_ids                 = local.subnet_ids
+      instance_types             = [local.instance_type]
+      desired_capacity           = 1
+      max_capacity               = 2
+      min_capacity               = 1
+      ami_type                   = "AL2_x86_64"
+      key_name                   = local.key_name
+      tags                       = local.tags_nodegroup
+      iam_role_additional_policies = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
+      security_group_ids         = [aws_security_group.node_sg.id]  # Assuming a security group resource
+    }
+  }
+
 }
 
 ################################################################################
